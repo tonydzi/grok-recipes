@@ -13,7 +13,7 @@ and every recipe runs end-to-end **without an API key**, so you can read and exe
 ```bash
 git clone https://github.com/tonydzi/grok-recipes && cd grok-recipes
 pip install -r requirements.txt
-pytest --nbmake examples/        # all four notebooks execute in offline demo mode
+pytest --nbmake examples/        # all four execute offline; each ends in a self-check cell that fails if a guard stops guarding
 ```
 
 Then open any `examples/*/guide.ipynb` in Jupyter. Add `XAI_API_KEY` to a `.env` (see `.env.example`) and re-run:

@@ -1,5 +1,57 @@
 # grok-recipes
 
+Four ready-to-read Python notebooks that show how to put safety checks around an AI model (Grok), so it cannot quietly do the wrong thing.
+
+**Who it's for:** developers building apps on Grok (or any OpenAI-style API) who want guardrails before they spend money on API calls.
+**What you get:** four notebooks (tool-call guardrails, cited answers, evals, prompt-injection defense) that run offline with no API key.
+
+## Quick start
+1. Install Python 3.12 or newer.
+2. Run `git clone https://github.com/tonydzi/grok-recipes && cd grok-recipes`, then `pip install -r requirements.txt`.
+3. Run `pytest --nbmake examples/`.
+4. Open any `examples/*/guide.ipynb` in Jupyter to read it.
+
+**Done when:** pytest finishes with all 4 notebooks passed and no API key set.
+
+> Want an AI agent to do it for you? Paste this to Claude Code / Codex / Cursor:
+> "Read the 'For AI agents' section of https://github.com/tonydzi/grok-recipes and set it up for me."
+
+## For AI agents
+
+### Preconditions
+- Python 3.12+ (the CI uses 3.12) and pip.
+- Packages come from `requirements.txt`: openai, pydantic, python-dotenv, jupyter, nbmake, pytest.
+- No account is needed for the offline run. A live run needs an xAI API key, which only the human can provide.
+- Ask the human: offline only, or also live Grok calls? Install into a virtual environment, not the global Python.
+
+### Install
+```bash
+git clone https://github.com/tonydzi/grok-recipes
+cd grok-recipes
+python -m venv .venv
+. .venv/bin/activate          # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+### Configure
+Offline mode needs nothing. For live calls only: copy `.env.example` to `.env` and set `XAI_API_KEY` to the key the human gives you. Never print, log or commit the key.
+
+### Verify
+```bash
+pytest --nbmake examples/
+```
+Expected: exit code 0 and every notebook passes (4 notebooks in `examples/`). Run it with `XAI_API_KEY` unset; the CI does the same on purpose.
+
+### Uninstall / rollback
+Delete the cloned folder (it contains the `.venv`). Nothing global is changed.
+
+### Rules for the agent
+- Do not run live calls without the human's yes and key; they cost money.
+- Never write the API key into a notebook, a commit or a log. `.env` stays out of git.
+- Do not "fix" a failing self-check cell by weakening it; it is there to fail when a guard stops guarding.
+
+## Details
+
 [![tests](https://github.com/tonydzi/grok-recipes/actions/workflows/tests.yml/badge.svg)](https://github.com/tonydzi/grok-recipes/actions/workflows/tests.yml)
 [![python](https://img.shields.io/badge/python-3.12%2B-blue)](requirements.txt)
 [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)

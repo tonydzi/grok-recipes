@@ -11,7 +11,7 @@ Four ready-to-read Python notebooks that show how to put safety checks around an
 3. Run `pytest --nbmake examples/`.
 4. Open any `examples/*/guide.ipynb` in Jupyter to read it.
 
-**Done when:** pytest finishes with all 4 notebooks passed and no API key set.
+**Done when:** pytest prints a last line like `4 passed in 19.07s` (the time varies; the first run can take a minute while Jupyter starts) and no API key is set. If `XAI_API_KEY` is set in your shell, unset it first, or the notebooks may call the paid API.
 
 > Want an AI agent to do it for you? Paste this to Claude Code / Codex / Cursor:
 > "Read the 'For AI agents' section of https://github.com/tonydzi/grok-recipes and set it up for me."
@@ -29,7 +29,7 @@ Four ready-to-read Python notebooks that show how to put safety checks around an
 git clone https://github.com/tonydzi/grok-recipes
 cd grok-recipes
 python -m venv .venv
-. .venv/bin/activate          # Windows: .venv\Scripts\activate
+. .venv/bin/activate          # Windows PowerShell: .venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 ```
 
@@ -38,9 +38,10 @@ Offline mode needs nothing. For live calls only: copy `.env.example` to `.env` a
 
 ### Verify
 ```bash
-pytest --nbmake examples/
+unset XAI_API_KEY             # PowerShell: Remove-Item Env:XAI_API_KEY -ErrorAction SilentlyContinue
+python -m pytest --nbmake examples/
 ```
-Expected: exit code 0 and every notebook passes (4 notebooks in `examples/`). Run it with `XAI_API_KEY` unset; the CI does the same on purpose.
+Expected: exit code 0 and a last line like `4 passed in 19.07s` (4 notebooks in `examples/`). Run it with `XAI_API_KEY` unset; the CI does the same on purpose, and a set key switches the notebooks from offline demo to live (paid) calls. This check can fail: each notebook contains `assert` cells that go red if a guard stops guarding. It proves the offline demos run, not that live Grok calls work.
 
 ### Uninstall / rollback
 Delete the cloned folder (it contains the `.venv`). Nothing global is changed.

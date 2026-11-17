@@ -109,3 +109,7 @@ for deterministic function-call contracts; thanks to [@rokoss21](https://github.
 ## License
 
 MIT. Built and used at [Palo Alto AI Research Lab](https://github.com/tonydzi/tonydzi).
+
+## AI contributors
+
+This project is built by a human + AI team. Credit for AI tools on commits follows one policy, one source for every repo: [AI-CONTRIBUTORS.md](https://github.com/tonydzi/.github/blob/main/AI-CONTRIBUTORS.md).
